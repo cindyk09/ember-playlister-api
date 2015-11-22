@@ -4,7 +4,7 @@
   "repository": "https://github.com/learn-co-curriculum/ember-playlister-api",
   "keywords": ["rails", "flatiron school", "playlister"],
   "scripts": {
-   "postdeploy": "rake db:migrate db:seed",
+   "postdeploy": "rake db:migrate db:seed"
    },
    "success_url": "/api/v1/artists"
 }
