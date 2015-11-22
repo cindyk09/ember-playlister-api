@@ -1,7 +1,19 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+spotify = RestClient.get("https://spotifycharts.com/api/?type=regional&country=global&recurrence=daily&date=latest&limit=200&offset=0")
+parsed = JSON.parse(spotify)
+parsed["entries"]["items"].each do |item|
+  album_name = item["track"]["album"]["name"]
+  album = Album.where(name: album_name).first_or_create do |a|
+    a.image_url = item["track"]["album"]["images"][0]["url"]
+  end
+  song_name = item["track"]["name"]
+
+  song = Song.where(name: song_name).first_or_create do |s|
+    s.album = album
+  end
+
+  item["track"]["artists"].each do |artist|
+    artist_name = artist["name"]
+    artist = Artist.where(name: artist_name).first_or_create
+    artist.songs << song unless artist.songs.include?(song)
+  end
+end
