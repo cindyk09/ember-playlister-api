@@ -1,8 +1,9 @@
 Albums:
 <ul>
-  start your iteration here!
+  {{#each model as |album|}}
   <li class="albums">
-    render the album name. The album name should link to the album show page.
+    {{link-to album.name "albums.album" album}}
   </li>
+  {{/each}}
 
 </ul>

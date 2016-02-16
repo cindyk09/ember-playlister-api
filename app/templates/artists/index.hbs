@@ -1,7 +1,8 @@
 Artists
 <ul>
-  start your iteration here.
+  {{#each model as |artist|}}
   <li class="artists">
-    render the artist's name. the name should link to the artist's show page.
+    {{link-to artist.name "artists.artist" artist}}
   </li>
+  {{/each}}
 </ul>
